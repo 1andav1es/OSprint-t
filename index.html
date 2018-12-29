@@ -1,14 +1,14 @@
 <!doctype html>
 <html>
   <head>
-    <title>Planet Sodor</title>
-    <script src="./Code/js/jquery.min.js"></script>
-    <script src="./Code/js/jspsych.js"></script>
-    <script src="./Code/js/plugins/jspsych-text.js"></script>
-    <script src="./Code/js/plugins/jspsych-single-stim.js"></script>
-    <script src="./Code/js/plugins/jspsych-survey-multi-choice.js"></script>
-    <script src="./Code/js/plugins/jspsych-button-response.js"></script>
-    <link href="./Code/js/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    <title>Sprint Orienteering</title>
+    <script src="./Code/jquery.min.js"></script>
+    <script src="./Code/jspsych.js"></script>
+    <script src="./Code/plugins/jspsych-text.js"></script>
+    <script src="./Code/plugins/jspsych-single-stim.js"></script>
+    <script src="./Code/plugins/jspsych-survey-multi-choice.js"></script>
+    <script src="./Code/plugins/jspsych-button-response.js"></script>
+    <link href="./Code/css/jspsych.css" rel="stylesheet" type="text/css"></link>
   </head>
 
  <body>
@@ -54,7 +54,6 @@
 
 			<p align="right">-</p>
 
-
 			<p align="center"><b>PARTICIPANT INFORMATION STATEMENT</b><br><br>
 			Understanding How Sprint Orienteers Make Decisions
 			</p>
@@ -92,7 +91,8 @@ at any time.</p>
                 <input type="button" id="consentButton" class="consent jspsych-btn" value="I agree" onclick="consentButtonClick()" >
 			</p>
 
-			<p>To withdraw your consent, simply close the browser tab and your data will be deleted from our records.</p>
+
+			<p>To withdraw your consent, simply close the browser tab and return the HIT. Your data will be deleted from our records.</p>
 		</div>
         <br><br>
 	</div>
@@ -309,7 +309,7 @@ at any time.</p>
             preload_images: images,
             on_finish: function() {
                 endExperiment( jsPsych.data.dataAsCSV(), function() {
-                                        document.write('<div id="endscreen" class="endscreen" style="width:1000px"><div class="endscreen" style="text-align:center; border:0px solid; padding:10px; font-size:120%; width:800px; float:right"><p><br><br><br>All done!<br><br></p></div></div>')
+                                        document.write('<div id="endscreen" class="endscreen" style="width:1000px"><div class="endscreen" style="text-align:center; border:0px solid; padding:10px; font-size:120%; width:800px; float:right"><p><br><br><br>All done!<br><br>Your completion code is <span id="turkcode" style="font-weight:bold;font-size:130%">' + turkcode + '</span>. To receive payment for the HIT, return to the Amazon Mechanical Turk page and enter this code. Please contact us if something goes wrong and we\'ll fix it as quickly as possible.</p></div></div>')
                     }
                 )
             }
@@ -319,14 +319,20 @@ at any time.</p>
         function demographicsButtonClick() {
             setDisplay('demographics', 'none');
             setDisplay('header','none')
+            //setHeader('');
+
+            //data.other.gender = getRadioButton("gender");
+            //data.other.age = document.getElementById("age").value;
+            //data.other.language = document.getElementById("language").value;
+            //data.other.country = document.getElementById("country").value;
 
             // record the condition assignment in the jsPsych data
             jsPsych.data.addProperties({
                 gender: getRadioButton("gender"),
                 age: document.getElementById("age").value,
                 language: document.getElementById("language").value,
-                country: document.getElementById("country").value
-                experience: getRadioButton("experience").value
+                country: document.getElementById("country").value,
+                experience: getRadioButton("experience").value,
                 handedness: getRadioButton("handedness").value
             });
 
@@ -334,7 +340,8 @@ at any time.</p>
             // record the condition assignment in the jsPsych data
             jsPsych.data.addProperties({
                 sampling: condition,
-                baserate: baserate
+                baserate: baserate,
+                turkcode: turkcode
             });
 
             startExperiment();
@@ -365,10 +372,10 @@ at any time.</p>
 	      {stimulus: '<img src="./Data/robot2.jpg" width=800px>'},
               {stimulus: '<img src="./Data/robot3.jpg" width=800px>'},
               {stimulus: '<img src="./Data/robot6.jpg" width=800px>'},
-              {stimulus: '<img src="./Data/robot7.jpg" width=800px>'},
-              {stimulus: '<img src="./Data/robot8_' + condition + '.jpg" width=800px>'},
-              {stimulus: '<img src="./Data/robot9_' + condition + '.jpg" width=800px>'},
-              {stimulus: '<img src="./Data/robot10_' + condition + '.jpg" width=800px>'}
+              {stimulus: '<img src="./img/robot7.jpg" width=800px>'},
+              {stimulus: '<img src="./img/robot8_' + condition + '.jpg" width=800px>'},
+              {stimulus: '<img src="./img/robot9_' + condition + '.jpg" width=800px>'},
+              {stimulus: '<img src="./img/robot10_' + condition + '.jpg" width=800px>'}
           ]
       };
       introloop.push(setup_block);
